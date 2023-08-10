@@ -13,40 +13,36 @@
     <img
       src="../assets/layer_1.png"
       class="parallax-layer layer3"
-      :style="{ transform: `translateY(${scrollY * -0}px)`, width: `100%` }"
+      :style="{ transform: `translateY(${scrollY * -0}px)` }"
     />
     <div class="reveal-layer"></div>
   </div>
   <div class="test"></div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      scrollY: 0,
-      screenWidth: `${window.innerWidth * 0.6}px`,
-    };
-  },
-  mounted() {
-    window.addEventListener("scroll", this.handleScroll);
-    window.addEventListener("resize", this.handleResize); // Event für Fenstergrößenänderungen hinzufügen
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from "vue";
 
-    this.handleResize();
-  },
+const scrollY = ref(0);
+const screenWidth = ref(`${window.innerWidth * 0.6}px`);
 
-  beforeDestroy() {
-    window.removeEventListener("scroll", this.handleScroll);
-  },
-  methods: {
-    handleScroll() {
-      this.scrollY = window.scrollY;
-    },
-    handleResize() {
-      this.screenWidth = `${window.innerWidth * 0.6}px`; // Bildschirmbreite aktualisieren
-    },
-  },
+const handleScroll = () => {
+  scrollY.value = window.scrollY;
 };
+
+const handleResize = () => {
+  screenWidth.value = `${window.innerWidth * 0.6}px`;
+};
+
+onMounted(() => {
+  window.addEventListener("scroll", handleScroll);
+  window.addEventListener("resize", handleResize);
+  handleResize();
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("scroll", handleScroll);
+});
 </script>
 
 <style scoped>
@@ -62,23 +58,20 @@ export default {
 }
 
 .parallax-layer {
-}
-
-.layer1 {
   position: absolute;
   z-index: 0;
   width: 100%;
 }
+.layer1 {
+  z-index: 0;
+}
 
 .layer2 {
-  position: absolute;
   z-index: 2;
   bottom: -50%;
-  width: 100%;
 }
 
 .layer3 {
-  position: absolute;
   z-index: 3;
   bottom: 0;
 }
@@ -87,11 +80,5 @@ export default {
   width: 100%;
   height: 100vh;
   background-color: #243541;
-  position: relative;
-  z-index: 98;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  vertical-align: top;
 }
 </style>
