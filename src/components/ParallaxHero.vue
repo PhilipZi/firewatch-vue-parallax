@@ -3,12 +3,12 @@
     <img
       src="../assets/background_parallax.png"
       class="parallax-layer layer1"
-      :style="{ transform: `translateY(${scrollY * -0.2}px)` }"
+      :style="{ transform: `translateY(${scrollY * -0.7}px)` }"
     />
     <img
       src="../assets/layout_2.png"
       class="parallax-layer layer2"
-      :style="{ transform: `translateY(${scrollY * -0.6}px)` }"
+      :style="{ transform: `translateY(${scrollY * -0.3}px)` }"
     />
     <img
       src="../assets/layer_1.png"
